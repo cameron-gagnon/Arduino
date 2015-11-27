@@ -1,8 +1,8 @@
-const unsigned int led1 = 13;
-const unsigned int led2 = 12;
-const unsigned int led3 = 11;
-const unsigned int led4 = 10;
-const unsigned int indicatorLed = 9;
+const unsigned int strand1 = 13;
+const unsigned int strand2 = 12;
+const unsigned int strand3 = 11;
+const unsigned int strand4 = 10;
+const unsigned int strand5 = 9;
 const unsigned int buttonTrig = 2;
 const unsigned int buttonBeat = 3;
 const unsigned int steadyPin = 4;
@@ -13,14 +13,15 @@ boolean steady = true;
 
 void setup(){
 
-  pinMode(led1, OUTPUT);
-  pinMode(led2, OUTPUT);
-  pinMode(led3, OUTPUT);
-  pinMode(led4, OUTPUT);
+  pinMode(strand1, OUTPUT);
+  pinMode(strand2, OUTPUT);
+  pinMode(strand3, OUTPUT);
+  pinMode(strand4, OUTPUT);
+  pinMode(strand5, OUTPUT);
+  
   pinMode(buttonTrig, INPUT);
   pinMode(buttonBeat, INPUT);
   pinMode(steadyPin, INPUT);
-  pinMode(indicatorLed, OUTPUT);
 
   Serial.begin(9600);
 }
@@ -33,10 +34,11 @@ void loop(){
     time = getDelay();
     randomRelay(time);
   } else {
-    digitalWrite(led1, LOW);
-    digitalWrite(led2, LOW);
-    digitalWrite(led3, LOW);
-    digitalWrite(led4, LOW);
+    digitalWrite(strand1, HIGH);
+    digitalWrite(strand2, HIGH);
+    digitalWrite(strand3, HIGH);
+    digitalWrite(strand4, HIGH);
+    digitalWrite(strand5, HIGH);
   }
   
 }
@@ -63,12 +65,12 @@ unsigned int getDelay(){
   int i = 0;
 
   while (digitalRead(buttonTrig) == LOW){
-      digitalWrite(led1, LOW);
-      digitalWrite(led2, LOW);
-      digitalWrite(led3, LOW);
-      digitalWrite(led4, LOW);
+      digitalWrite(strand1, HIGH);
+      digitalWrite(strand2, HIGH);
+      digitalWrite(strand3, HIGH);
+      digitalWrite(strand4, HIGH);
+      digitalWrite(strand5, HIGH);
       
-      digitalWrite(indicatorLed, LOW);
       unsigned long currentTime = millis();
       unsigned long timeDiff = 0;
 
@@ -77,17 +79,17 @@ unsigned int getDelay(){
         Serial.println(i);
         if (i != 0){
           timeDiff = currentTime - lastTime;
-          Serial.println(i - 1 + " " + timeDiff);
+          Serial.print(i - 1);
+          Serial.print(" ");
+          Serial.println(timeDiff);
           arr[i - 1] = timeDiff;
         }
           lastTime = currentTime;
           i++;
-          delay(50);
+          delay(100);
       }
   }
-  
-  digitalWrite(indicatorLed, HIGH);
-  
+ 
   if (i != 0){
     unsigned long totalTimeDiff = 0;
   
@@ -107,9 +109,10 @@ unsigned int getDelay(){
 }
 
 void randomRelay(int time){  
-    digitalWrite(led1, random(0, 2));
-    digitalWrite(led2, random(0, 2));
-    digitalWrite(led3, random(0, 2));
-    digitalWrite(led4, random(0, 2));
+    digitalWrite(strand1, random(0, 2));
+    digitalWrite(strand2, random(0, 2));
+    digitalWrite(strand3, random(0, 2));
+    digitalWrite(strand4, random(0, 2));
+    digitalWrite(strand5, random(0, 2));
     delay(time);
 }
